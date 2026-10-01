@@ -1,0 +1,33 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ruthie",
+  "version": "0.1.0-beta.1",
+  "description": "Your shared agenda, in step with whoever helps you run your days.",
+  "author": {
+    "name": "Heartbred",
+    "url": "https://ruthie.app"
+  },
+  "homepage": "https://ruthie.app",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Ruthie",
+        "shortDescription": "Your shared agenda.",
+        "longDescription": "A place to keep your days, that stays in step with whoever helps you run them.",
+        "developerName": "Heartbred",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://ruthie.app",
+        "supportURL": "https://ruthie.app/support/",
+        "defaultPrompt": [
+          "What do I have going on today and next?",
+          "Add this to Tuesday.",
+          "Help me organize the next ten days."
+        ],
+        "brandColor": "#9C3B62",
+        "composerIcon": "./assets/ruthie-icon.png",
+        "logo": "./assets/ruthie-icon.png"
+      }
+    }
+  }
+}

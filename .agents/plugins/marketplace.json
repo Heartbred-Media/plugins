@@ -1,0 +1,20 @@
+{
+  "name": "heartbred",
+  "interface": {
+    "displayName": "Heartbred"
+  },
+  "plugins": [
+    {
+      "name": "ruthie",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ruthie"
+      },
+      "policy": {
+        "installation": "NOT_AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
