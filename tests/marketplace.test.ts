@@ -20,14 +20,14 @@ function inventory(directory: string): string[] {
 }
 
 describe("Heartbred marketplace foundation", () => {
-  test("catalog is product-neutral with one deliberately unavailable Ruthie entry", () => {
+  test("catalog offers Ruthie's remote beta with authentication on install", () => {
     expect(json(".agents/plugins/marketplace.json")).toEqual({
       name: "heartbred",
       interface: { displayName: "Heartbred" },
       plugins: [{
         name: "ruthie",
         source: { source: "local", path: "./plugins/ruthie" },
-        policy: { installation: "NOT_AVAILABLE", authentication: "ON_INSTALL" },
+        policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
         category: "Productivity",
       }],
     });
@@ -60,7 +60,7 @@ describe("Heartbred marketplace foundation", () => {
     expect(manifest.skills).toBe("./skills/");
     expect(manifest.mcpServers).toBe("./.mcp.json");
     expect(manifest.name).toBe("ruthie");
-    expect(manifest.version).toBe("0.1.0-beta.2");
+    expect(manifest.version).toBe("0.1.0-beta.3");
     expect(manifest.author).toEqual({ name: "Heartbred", url: "https://ruthie.app" });
     expect(manifest.interface.developerName).toBe("Heartbred");
     expect(manifest.interface.composerIcon).toBe("./assets/ruthie-icon.png");
@@ -76,6 +76,15 @@ describe("Heartbred marketplace foundation", () => {
         /\/Users\/|dev-mcp\.|dev-account\.|localhost|127\.0\.0\.1|sk_live_|sk_test_|Bearer\s+[A-Za-z0-9_-]+|-----BEGIN .*PRIVATE KEY-----/,
       );
     }
+  });
+
+  test("beta instructions use the native marketplace and retain acceptance boundaries", () => {
+    const readme = read("README.md");
+    expect(readme).toContain("codex plugin marketplace add Heartbred-Media/plugins --ref main");
+    expect(readme).toContain("codex plugin marketplace upgrade heartbred");
+    expect(readme).toContain("independent-account installation from the published catalog remains");
+    expect(readme).toContain("does not imply directory review or approval by OpenAI");
+    expect(readme).not.toContain("currently unavailable");
   });
 
   test("skill has hosted planning safeguards without a local diagnostic dependency", () => {

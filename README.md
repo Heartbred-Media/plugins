@@ -6,19 +6,56 @@ the package does not install or run a local MCP server.
 
 ## Availability
 
-Ruthie's remote Codex beta connection is being prepared. Its catalog entry is
-currently unavailable. Production installation and sign-in verification remain
-pending; this repository is not an announcement of support
-for every Codex client or account plan.
+Ruthie's remote Codex plugin is available here for invited beta testers with an
+existing Ruthie account. This is a controlled beta, not an announcement of support
+for every Codex client, operating system or account plan.
 
-When enabled, an invited tester will use Codex's supported marketplace and plugin
-installation flow, then sign in to Ruthie through the provider-owned authorization
-screen. Installation does not create a Ruthie account or grant access to anyone's
+Installation does not create a Ruthie account or grant access to anyone's
 agenda. Ruthie admission and Space permissions are enforced by the service.
+
+## Install for the beta
+
+Use an up-to-date Codex client with plugin marketplace support. Register this
+repository using the official Codex CLI:
+
+```sh
+codex plugin marketplace add Heartbred-Media/plugins --ref main
+```
+
+Then restart the desktop app, open its Plugins Directory, choose **Heartbred**,
+and install **Ruthie**. Sign in to your Ruthie account in the browser and approve
+the requested read, write and offline access. Check that the consent screen shows
+the intended Ruthie account before approving. Start a new chat and ask Codex to
+list your Ruthie Spaces before making changes.
+
+If you registered the catalog while Ruthie was unavailable, refresh it first:
+
+```sh
+codex plugin marketplace upgrade heartbred
+```
+
+These are [OpenAI's supported marketplace commands](https://developers.openai.com/plugins/build/plugins),
+not a custom installer. If your client lacks the command or the Heartbred entry,
+contact beta support; do not substitute a development endpoint or another person's
+credentials. Existing owner-local installations are not migrated by these instructions;
+ask beta support before replacing one.
 
 Do not paste passwords, sign-in codes, or access tokens into a chat. There is no
 Bun installation, local authentication script, or application source checkout in
 this setup. A local cached plugin package is not a local MCP server.
+
+## Verification status
+
+Production verification on October 3, 2026 used native Codex 0.159.2 with an
+isolated installation of the package preceding this availability/version update.
+Sign-in, scoped reads, guarded create/edit/complete, duplicate prevention,
+stale-write rejection, token refresh, revocation and reconnect passed. Refresh
+used simulated local-cache expiry against the real provider, not a full token-lifetime
+endurance test. This release leaves the MCP configuration and skill unchanged.
+
+An independent-account installation from the published catalog remains
+the next acceptance check before broader onboarding. Package checks alone do not
+prove that journey or compatibility with every client.
 
 ## Ruthie
 
