@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "ruthie": {
+      "type": "http",
+      "url": "https://mcp.ruthie.app/mcp",
+      "scopes": ["ruthie:read", "ruthie:write", "offline_access"]
+    }
+  }
+}

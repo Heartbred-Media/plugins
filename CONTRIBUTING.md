@@ -12,9 +12,9 @@ access controls and deployments elsewhere.
    affected checks on the final revision.
 4. Ruzz merges the reviewed PR. Do not merge automatically.
 
-This initial repository stays private through its first review and merge.
-Changing it to public is a separate authorized action. Review the entire history,
-PR text, assets and author identity before doing so, not just the current files.
+This repository is public. Review new commits, PR text, assets and author identity
+before pushing, not just the final file contents. Any future repository visibility
+change is a separate authorized action.
 Never import another repository's Git history or private review discussions.
 
 ## Enabling a plugin
@@ -38,8 +38,13 @@ working connection as a test side effect.
 
 Use a stable product name and a versioned package under `plugins/<product>/`.
 Keep the catalog path inside this repository. Skills and assets belong to that
-package. Remote MCP configuration contains only the transport and public HTTPS
-endpoint; credentials and local runtimes do not belong in the package.
+package. Remote MCP configuration contains only the transport, public HTTPS
+endpoint and explicit OAuth scopes; credentials and local runtimes do not belong
+in the package. Ruthie uses the supported Codex compatibility manifest and
+`.mcp.json` to request only read, write and offline access. Do not add a portable
+root manifest/MCP file that could take precedence and discard the explicit scopes.
+Package tests check this boundary; native host authorization must separately prove
+the actual request contains exactly the intended scopes without a CLI override.
 
 Review package updates and live host update behavior rather than assuming a
 changed version immediately refreshes every installation. Do not invent a license
