@@ -7,8 +7,8 @@ the package does not install or run a local MCP server.
 ## Availability
 
 Ruthie's remote Codex beta connection is being prepared. Its catalog entry is
-currently unavailable. Installation and sign-in have not yet passed the complete
-independent-account rehearsal; this repository is not an announcement of support
+currently unavailable. Production installation and sign-in verification remain
+pending; this repository is not an announcement of support
 for every Codex client or account plan.
 
 When enabled, an invited tester will use Codex's supported marketplace and plugin
@@ -32,8 +32,12 @@ Do not put private agenda contents or credentials into a public repository issue
 ## Package layout
 
 The catalog is `.agents/plugins/marketplace.json`. The Ruthie package is
-`plugins/ruthie/`, with `plugin.json`, `mcp.json`, `skills/`, and `assets/`.
-This follows [OpenAI's plugin packaging format](https://developers.openai.com/plugins/build/plugins).
+`plugins/ruthie/`, with `.codex-plugin/plugin.json`, `.mcp.json`, `skills/`,
+and `assets/`. This uses the supported Codex compatibility layout in
+[OpenAI's plugin packaging format](https://developers.openai.com/plugins/build/plugins).
+The MCP configuration explicitly requests `ruthie:read`, `ruthie:write`, and
+`offline_access` so authorization does not default to broader provider scopes.
+There is no competing portable root manifest or MCP configuration.
 
 This marketplace is separate from OpenAI's public plugin directory. Presence
 here does not imply directory review or approval by OpenAI.

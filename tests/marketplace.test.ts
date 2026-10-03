@@ -35,35 +35,36 @@ describe("Heartbred marketplace foundation", () => {
 
   test("Ruthie package contains only the reviewed distribution files", () => {
     expect(inventory(join(root, plugin))).toEqual([
+      `${plugin}/.codex-plugin/plugin.json`,
+      `${plugin}/.mcp.json`,
       `${plugin}/assets/ruthie-icon.png`,
-      `${plugin}/mcp.json`,
-      `${plugin}/plugin.json`,
       `${plugin}/skills/manage-ruthie/SKILL.md`,
     ]);
   });
 
-  test("MCP is production HTTPS only, without commands, headers or credentials", () => {
-    expect(json(`${plugin}/mcp.json`)).toEqual({
-      $schema: "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
-      mcpServers: { ruthie: { type: "streamable-http", url: "https://mcp.ruthie.app/mcp" } },
+  test("MCP is production HTTPS only with explicit least-privilege OAuth scopes", () => {
+    expect(json(`${plugin}/.mcp.json`)).toEqual({
+      mcpServers: { ruthie: {
+        type: "http",
+        url: "https://mcp.ruthie.app/mcp",
+        scopes: ["ruthie:read", "ruthie:write", "offline_access"],
+      } },
     });
   });
 
-  test("portable manifest uses Heartbred branding and an independent beta version", () => {
-    const manifest = json(`${plugin}/plugin.json`);
+  test("Codex manifest explicitly wires skills and scoped MCP without a portable override", () => {
+    const manifest = json(`${plugin}/.codex-plugin/plugin.json`);
     expect(Object.keys(manifest).sort()).toEqual([
-      "$schema", "author", "description", "extensions", "homepage", "name", "version",
+      "author", "description", "homepage", "interface", "mcpServers", "name", "skills", "version",
     ]);
-    expect(manifest.$schema).toBe("https://agent-plugins.org/schemas/1.0.0/plugin.schema.json");
+    expect(manifest.skills).toBe("./skills/");
+    expect(manifest.mcpServers).toBe("./.mcp.json");
     expect(manifest.name).toBe("ruthie");
-    expect(manifest.version).toBe("0.1.0-beta.1");
+    expect(manifest.version).toBe("0.1.0-beta.2");
     expect(manifest.author).toEqual({ name: "Heartbred", url: "https://ruthie.app" });
-    expect(Object.keys(manifest.extensions)).toEqual(["com.openai"]);
-    const overlay = manifest.extensions["com.openai"];
-    expect(Object.keys(overlay)).toEqual(["interface"]);
-    expect(overlay.interface.developerName).toBe("Heartbred");
-    expect(overlay.interface.composerIcon).toBe("./assets/ruthie-icon.png");
-    expect(overlay.interface.logo).toBe("./assets/ruthie-icon.png");
+    expect(manifest.interface.developerName).toBe("Heartbred");
+    expect(manifest.interface.composerIcon).toBe("./assets/ruthie-icon.png");
+    expect(manifest.interface.logo).toBe("./assets/ruthie-icon.png");
     expect(readFileSync(join(root, plugin, "assets/ruthie-icon.png")).subarray(0, 8))
       .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
   });
