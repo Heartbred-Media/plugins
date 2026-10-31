@@ -23,10 +23,16 @@ def polly(command, **options):
     args = cli + [command]
     for key, value in options.items():
         args += ['--' + key.replace('_', '-'), str(value)]
-    process = subprocess.run(args, capture_output=True, text=True, check=True)
-    envelope = json.loads(process.stdout)
+    process = subprocess.run(args, capture_output=True, text=True)
+    try:
+        envelope = json.loads(process.stdout)
+    except json.JSONDecodeError as error:
+        raise RuntimeError(
+            f'Polly exited {process.returncode} without JSON: {process.stderr.strip()}'
+        ) from error
     if not envelope.get('ok'):
-        raise RuntimeError(envelope['error'])
+        raise RuntimeError(envelope['error'])  # Preserve code and recovery message.
+    process.check_returncode()
     return envelope['result']
 
 context = polly('context')
