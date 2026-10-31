@@ -1,0 +1,16 @@
+{
+  "name": "heartbred",
+  "owner": {
+    "name": "Heartbred"
+  },
+  "plugins": [
+    {
+      "name": "polly",
+      "source": "./plugins/polly",
+      "description": "Find, create, revise and export artwork from your local Polly Draws library. Requires Polly Draws 0.2.0 or later on macOS."
+    }
+  ],
+  "metadata": {
+    "description": "Skills and integrations for Heartbred products."
+  }
+}

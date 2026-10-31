@@ -1,0 +1,25 @@
+{
+  "name": "polly",
+  "version": "0.1.0-beta.1",
+  "description": "Find, create, revise and export artwork from your local Polly Draws library. Requires Polly Draws 0.2.0 or later on macOS.",
+  "author": {
+    "name": "Heartbred"
+  },
+  "homepage": "https://github.com/Heartbred-Media/polly-draws",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Polly Draws",
+    "shortDescription": "Use your local artwork library.",
+    "longDescription": "Local preview for Codex on macOS. Find existing artwork, make editable variations and export SVG or PNG through the installed Polly Draws app. Requires Polly Draws 0.2.0 or later and an opened library.",
+    "developerName": "Heartbred",
+    "category": "Design",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Find an asset in my Polly library and use it in this project.",
+      "Make a variation of my artwork and show it at its intended size."
+    ]
+  }
+}

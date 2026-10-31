@@ -53,3 +53,14 @@ package or submitting it to a public directory.
 
 The root Bun test setup is for maintainers and CI only. Testers do not install Bun
 or run this repository as an application.
+
+## Local skills-only products
+
+Polly's package contains instructions for an already-installed Mac application,
+not a hosted MCP connection. The hosted OAuth enablement checklist above continues
+to apply to Ruthie; it is not a requirement to invent authentication for Polly.
+Keep local runtime code and installers in the product repository. Before offering
+a local skill, validate both host manifests and test discovery, real reads and
+exports against the required app version in a fresh session. Document the minimum
+app version and local-only boundary. Native app signing/distribution and a public
+app release remain the product repository's responsibility.

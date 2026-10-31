@@ -21,15 +21,14 @@ function inventory(directory: string): string[] {
 
 describe("Heartbred marketplace foundation", () => {
   test("catalog offers Ruthie's remote beta with authentication on install", () => {
-    expect(json(".agents/plugins/marketplace.json")).toEqual({
-      name: "heartbred",
-      interface: { displayName: "Heartbred" },
-      plugins: [{
+    const catalog = json(".agents/plugins/marketplace.json");
+    expect(catalog.name).toBe("heartbred");
+    expect(catalog.interface).toEqual({ displayName: "Heartbred" });
+    expect(catalog.plugins.find((entry: {name: string}) => entry.name === "ruthie")).toEqual({
         name: "ruthie",
         source: { source: "local", path: "./plugins/ruthie" },
         policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
         category: "Productivity",
-      }],
     });
   });
 

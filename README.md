@@ -4,7 +4,48 @@ Plugin packages for Heartbred products. Each package contains its skills,
 presentation assets, and connection information. Ruthie's MCP service is hosted;
 the package does not install or run a local MCP server.
 
-## Availability
+## Polly Draws — local preview
+
+The Polly skill works with **Polly Draws 0.2.0 or later**, installed on the same Mac,
+in a local Codex or Claude Code session with shell access. This is an early local
+integration; a public Polly application download is not available yet. Existing
+local testers can use their reviewed 0.2.0 build. Installing this plugin does not
+install Polly, download an engine, start a server or grant filesystem access.
+
+Keep the signed app in `/Applications` or `~/Applications`, and open your existing
+shared library once in Polly. The skill uses `--cli context` to discover it. All
+projects stay in that one library. Agent exports return bytes to the caller, which
+saves them in its own project with its normal permissions.
+
+For Codex, use the Heartbred marketplace below and choose **Polly Draws**.
+For Claude Code:
+
+```sh
+claude plugin marketplace add Heartbred-Media/plugins
+claude plugin install polly@heartbred
+```
+
+Start a new session and ask it to find and use an artwork from a named Polly
+project. Both hosts load the same `plugins/polly/skills/use-polly/SKILL.md`.
+The Claude catalog currently lists Polly only; Ruthie's Codex connection is not
+implicitly declared compatible with another host.
+
+Local verification on October 31, 2026 used Claude Code 2.1.63 in a fresh session
+with this package loaded through `--plugin-dir`. Given only an artwork description,
+it loaded the skill, discovered the configured library/project, selected matching
+light/dark variations, inspected previews, exported SVG and 64 px PNG, and wired
+the SVGs into a 32 px header with provenance. The library remained unchanged.
+The isolated test initially denied direct app-path discovery and cleanup commands;
+the documented Python subprocess route completed the artwork workflow with its
+existing permissions. This tests the local skill, not installation from a merged
+public catalog or Claude Design access.
+
+Claude Design/cloud chat cannot execute a Mac binary simply because the skill
+is installed. Use local Claude Code for this workflow; broader design and desktop
+connector support is separate work. Neither public-directory approval nor a
+marketing website is required to test this local marketplace package.
+
+## Ruthie availability
 
 Ruthie's remote Codex plugin is available here for invited beta testers with an
 existing Ruthie account. This is a controlled beta, not an announcement of support
@@ -68,7 +109,10 @@ Do not put private agenda contents or credentials into a public repository issue
 
 ## Package layout
 
-The catalog is `.agents/plugins/marketplace.json`. The Ruthie package is
+The Codex catalog is `.agents/plugins/marketplace.json`; Claude Code uses
+`.claude-plugin/marketplace.json`. Polly shares one skill directory between its
+small host-specific manifests. The catalogs can offer different products until
+each host integration is tested. The Ruthie package is
 `plugins/ruthie/`, with `.codex-plugin/plugin.json`, `.mcp.json`, `skills/`,
 and `assets/`. This uses the supported Codex compatibility layout in
 [OpenAI's plugin packaging format](https://developers.openai.com/plugins/build/plugins).
