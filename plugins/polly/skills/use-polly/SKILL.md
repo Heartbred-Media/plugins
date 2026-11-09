@@ -24,9 +24,10 @@ If the result is `SETUP_REQUIRED`, have the user open their existing library thr
 ## Find and choose
 
 1. Use `projects` or the projects in `context` to resolve the name, then `find --project PROJECT_ID --query WORDS` or `list --project PROJECT_ID`.
-2. Use `inspect --asset ID` to read the artwork's names, description, aliases, tags, variation names, kept states and history. Do not infer an asset's identity from its filename or a previous conversation.
+2. Use `inspect --asset ID` to read the artwork's names, description, aliases, tags, variation names, official selection, kept states and history. Do not infer an asset's identity from its filename or a previous conversation.
 3. Use `preview --asset ID --variation ID` and inspect the returned image when visual selection matters. For a thumbnail the host can read independently, use `export-data --format png --width 256` and save its decoded bytes in the task's working directory.
-4. Choose the variation the user requested. A draft can be exported; it is not approved merely because it is newest. Prefer a clearly identified kept choice when the user asks for the approved asset. Ask if several materially different choices remain. Do not mark artwork kept without a user choice.
+4. Choose the variation the user explicitly requested. For a request such as “the character” or “the approved artwork”, check for the `official-variation` capability and run `official --asset ID`. When `isSet` is true, use the returned variation and current revision. When none is set and the variations differ materially, stop and ask which one to use. If the app lacks the capability, inspect and ask instead of assuming a kept, newest, or first variation is official.
+5. Mark or clear an official choice only when the user chooses it. `official --asset ID --variation ID` designates one variation, and `clear-official --asset ID` removes the designation. Kept states and saved drawing histories stay independent of that choice. Existing linked placements retain their selected source variation when the official choice changes.
 
 ## Revise or create
 

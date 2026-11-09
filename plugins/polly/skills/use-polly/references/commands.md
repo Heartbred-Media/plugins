@@ -58,3 +58,16 @@ For PNG, use `format='png', width=64` for a 32 pt asset at 2×. `width` is not v
 An ordinary edit is `edit --asset ID --variation ID --expected REVISION_ID --element ELEMENT_ID --color '#E87524' --channel fill`. `scale --factor 2` scales the canvas, drawing and strokes together. Use `vary` first if the request calls for a separate variation. Keep `--expected` tied to the particular variation being changed.
 
 Pass complete drawing/operation JSON with `subprocess.run(..., input=json.dumps(recipe), text=True)` and `--drawing -` or `--operations -`; do not interpolate JSON into a shell command. The installed `drawing-help` describes shape, path, grouping and transform fields.
+
+
+## Official selection
+
+In the Python example, check `'official-variation' in context['capabilities']` before using these commands: `polly()` has already unwrapped the result. In the raw CLI JSON envelope, capabilities are under `result.capabilities`. An older app requires an explicit user choice when materially different variations remain.
+
+- `official --asset ID` returns `isSet`, the official variation and its current revision, or a message that none is set.
+- `official --asset ID --variation VARIATION_ID` designates the user's choice.
+- `clear-official --asset ID` clears the designation.
+- Setting and clearing accept `--expected-library NUMBER` from the inspected library snapshot.
+- `inspect`, `list`, and `find` report `officialVariationID` as an ID or null.
+
+For export or linked placement, preserve any variation the user explicitly selected. Use the ID returned by `official` only when the user wants the official choice and `isSet` is true. When none is set and materially different choices remain, ask the user and use their selected variation ID. A designation follows the variation's current revision.
