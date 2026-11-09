@@ -62,7 +62,7 @@ Pass complete drawing/operation JSON with `subprocess.run(..., input=json.dumps(
 
 ## Official selection
 
-Check `context.result.capabilities` for `official-variation` before using these commands. An older app requires an explicit user choice when materially different variations remain.
+In the Python example, check `'official-variation' in context['capabilities']` before using these commands: `polly()` has already unwrapped the result. In the raw CLI JSON envelope, capabilities are under `result.capabilities`. An older app requires an explicit user choice when materially different variations remain.
 
 - `official --asset ID` returns `isSet`, the official variation and its current revision, or a message that none is set.
 - `official --asset ID --variation VARIATION_ID` designates the user's choice.
@@ -70,4 +70,4 @@ Check `context.result.capabilities` for `official-variation` before using these 
 - Setting and clearing accept `--expected-library NUMBER` from the inspected library snapshot.
 - `inspect`, `list`, and `find` report `officialVariationID` as an ID or null.
 
-When an explicit variation is needed for export or linked placement, use the ID returned by `official` after verifying the user's intent. A designation follows the variation's current revision.
+For export or linked placement, preserve any variation the user explicitly selected. Use the ID returned by `official` only when the user wants the official choice and `isSet` is true. When none is set and materially different choices remain, ask the user and use their selected variation ID. A designation follows the variation's current revision.
